@@ -153,6 +153,7 @@ def recursive_reflect(a, b, pos=None, angle=None, iterations=360, SCALE=1):
 	assert init_x**2 / a**2 + init_y**2 / b**2 <= 1
 
 	segments = []
+
 	k, c = make_line(pos, angle)
 	if k not in NINTIES:
 		func = intersection
@@ -170,7 +171,7 @@ def recursive_reflect(a, b, pos=None, angle=None, iterations=360, SCALE=1):
 
 	sect_x, sect_y = intersects[index]
 
-	segments.append([(init_x, init_y), (sect_x, sect_y)])
+	segments.append([(init_x * SCALE, init_y * SCALE), (sect_x * SCALE, sect_y * SCALE)])
 
 	start_x, start_y = sect_x, sect_y
 	current_k = k
@@ -289,7 +290,12 @@ while run:
 			lastSegments = segments.copy()
 			# 갱신 필요
 			mousePos = (-(ScreenWidth/2-mouseX)/SCALE, (ScreenHeight/2-mouseY)/SCALE)
-			segments = recursive_reflect(originala, originalb, mousePos, 20, 360, SCALE)
+			# segments = []
+			# for angle in range(0, 360, 20):
+			# 	temp = recursive_reflect(originala, originalb, mousePos, angle, 100, SCALE)
+			# 	for x in temp:
+			# 		segments.append(x)
+			segments = recursive_reflect(originala, originalb, mousePos, 45, 360, SCALE)
 		except:
 			segments = lastSegments
 			pass
